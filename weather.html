@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>城市天气</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.3/jquery.js"></script>
+  </head>
+  <body>
+    <div>
+        <form id='cityForm' method="post">
+          <label for="city">城市</label>
+          <select id="city" name="city" required>
+            <option value="" disabled selected hidden>请选择城市</option>
+            <option value="上海">上海</option>
+            <option value="北京">北京</option>
+            <option value="广州">广州</option>
+            <option value="深圳">深圳</option>
+            <!-- <option value="5">成都</option>
+            <option value="6">四川</option>
+            <option value="7">云南</option> -->
+          </select>
+          <button type="submit" id="submitButton">提交</button>
+          <button type="reset">重置</button>
+        </form>
+        <p id="weatherData"></p>
+      </div>
+      <script>
+            const cityMap = {
+                "上海":101020100,
+                "北京":101010100,
+                "广州":101280101,
+                "深圳":101280601,
+            }
+            const cityForm = document.getElementById("cityForm");
+            const selectCity = document.getElementById("city");
+            const weatherData = document.getElementById("weatherData");
+            cityForm.addEventListener('submit', () => {
+                event.preventDefault(); // 阻止表单提交默认行为
+                let city = selectCity.value;
+                console.log(city);  
+                let cityId = cityMap[city];
+                console.log(cityId);
+                getNowWeather(`https://devapi.qweather.com/v7/weather/now?location=${cityId}&key=8c698ff8a18c4ae597d78a59dca335cc`);
+            });
+
+            function getJson(url) {
+                return new Promise((resolve, reject) => {
+                    $.ajax({
+                        url,
+                        method: 'get',
+                        success(res) {
+                            resolve(res)
+                        },
+                        error(err) {
+                            reject(err)
+                        }
+                    })
+                })
+                
+            }
+                
+
+            async function getNowWeather(url) {
+                let res = await getJson(url);
+                // console.log(res.now);
+                // console.log(res.now.text);
+                // console.log("------------------");
+                weatherData.textContent =  "现在的是" + res.now.text + "天，体感温度是" + res.now.temp + "摄氏度";
+                // return res.now.text
+            }
+
+      </script>
+  </body>
+</html>
