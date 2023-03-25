@@ -7,9 +7,6 @@
   "description": "weather website",
   "main": "app.ts",
   "devDependencies": {},
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/IDHAR001/weather.git"
