@@ -24,6 +24,6 @@ const server = http.createServer((request, response) => {
         response.end('Not Found');
     }
 })
-server.listen(3000, () => {
+server.listen(8080, () => {
     console.log('启动成功...');
 })
