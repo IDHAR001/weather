@@ -1,28 +1,26 @@
 const http = require('http');
 const url = require('url');
+const fs = require('fs');
 
 const server = http.createServer((request, response) => {
     response.setHeader('content-type', 'text/html;charset=utf-8');
     // let resMethod = request.method;
     let{method} = request;
     let {url} = request;
-    if (method === 'GET' && url === '/login') {
-        request.on('data', chunk => {
-            console.log(chunk);
-        });
-        request.on('end', () => {
-            response.end('登录页面');
-        });
-    } else if (method === 'GET' && url === '/reg') {
-        request.on('data', chunk => {
-            console.log(chunk);
-        });
-        request.on('end', () => {
-            response.end('注册页面');
-        });
-    } else {
-        response.end('Not Found');
-    }
+
+    // 获取url路径
+    let {pathname} = new URL(request.url, 'http://127.0.0.1' || 'https://v2ray0.azurewebsites.net');
+    let filePath = __dirname + '/page' + pathname;
+    // 读取文件 fs 异步 api
+    fs.readFile(filePath, (err, data) => {
+        if (err) {
+            response.statusCode = 500;
+            response.end('html文件读取失败')
+            return;
+        }
+        response.end(data);
+    });
+
 })
 server.listen(8080, () => {
     console.log('启动成功...');
