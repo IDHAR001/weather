@@ -2,6 +2,7 @@ const http = require('http');
 const url = require('url');
 const fs = require('fs');
 
+var port = process.env.PORT || 3000;
 const server = http.createServer((request, response) => {
     response.setHeader('content-type', 'text/html;charset=utf-8');
     // let resMethod = request.method;
@@ -22,6 +23,6 @@ const server = http.createServer((request, response) => {
     });
 
 })
-server.listen(5233, () => {
+server.listen(port, () => {
     console.log('启动成功...');
 })
