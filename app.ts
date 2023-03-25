@@ -3,6 +3,7 @@ const url = require('url');
 const fs = require('fs');
 
 var port = process.env.PORT || 3000;
+
 const server = http.createServer((request, response) => {
     response.setHeader('content-type', 'text/html;charset=utf-8');
     // let resMethod = request.method;
